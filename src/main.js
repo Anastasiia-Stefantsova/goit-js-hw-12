@@ -1,56 +1,53 @@
-import { searchPhotos } from './js/pixabay-api.js';
-import { markupInterface } from './js/render-functions.js';
+import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
+
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
-import { listImg } from './js/render-functions.js';
 
-const searchButton = document.querySelector('.searchButton');
-const clearInput = () => {
-  const input = document.querySelector('.input');
-  input.value = '';
-};
+import { fetchPhotos } from './js/pixabay-api';
+import { createMarkup } from './js/render-functions';
 
-function hideLoader() {
-  const loader = document.querySelector('.loader');
-  loader.style.display = 'none';
+const galleryEl = document.querySelector('.js-gallery');
+const searchFormEl = document.querySelector('.js-search-form');
+const loaderEl = document.querySelector('.js-loader');
+
+function onSearch(event) {
+  event.preventDefault();
+  const query = event.target.elements.searchword.value.trim();
+  galleryEl.innerHTML = '';
+  if (query === '') {
+    return iziToast.error({
+      message:
+        'Sorry, there are no images matching your search query. Please try again!',
+      position: 'topRight',
+    });
+  }
+  loaderEl.classList.remove('is-hidden');
+
+  fetchPhotos(query)
+    .then(imagesData => {
+      if (imagesData.hits.length === 0) {
+        iziToast.error({
+          message:
+            'Sorry, there are no images matching your search query. Please try again!',
+          position: 'topRight',
+        });
+      }
+
+      galleryEl.innerHTML = createMarkup(imagesData.hits);
+      const lightbox = new SimpleLightbox('.item-list-link', {
+        captionsData: 'alt',
+        captionsDelay: 250,
+      });
+    })
+    .catch(error => console.log(error))
+    .finally(() => {
+      event.target.reset();
+      loaderEl.classList.add('is-hidden');
+    });
 }
 
-searchButton.addEventListener('click', event => {
-  event.preventDefault();
+searchFormEl.addEventListener('submit', onSearch);
 
-  const input = document.querySelector('.input');
 
-  if (input.value.trim() == '') {
-    iziToast.error({
-      title: 'Error',
-      message:
-        'The search field cannot be empty! Please enter the search query!',
-    });
-    return;
-  } else {
-    searchPhotos(input)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(response.status);
-        }
-        return response.json();
-      })
-      .then(data => {
-        hideLoader();
-        markupInterface(data);
-        if (!listImg.childElementCount) {
-          iziToast.error({
-            title: 'Error',
-            message:
-              'Sorry, there are no images matching your search query. Please try again!',
-          });
-        }
-      })
-      .catch(error => {
-        hideLoader();
-        console.error('Error:', error);
-      });
-  }
-  clearInput();
-});
 
