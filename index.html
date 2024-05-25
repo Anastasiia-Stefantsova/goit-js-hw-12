@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/goit-js-hw-12/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>HomeWork11</title>
+    <title>HomeWork12</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -12,33 +12,26 @@
       href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
       rel="stylesheet"
     />
-
     
     <script type="module" crossorigin src="/goit-js-hw-12/commonHelpers.js"></script>
-    <link rel="modulepreload" crossorigin href="/goit-js-hw-12/assets/vendor-0fc460d7.js">
+    <link rel="modulepreload" crossorigin href="/goit-js-hw-12/assets/vendor-f144e563.js">
     <link rel="stylesheet" href="/goit-js-hw-12/assets/vendor-4b066c51.css">
-    <link rel="stylesheet" href="/goit-js-hw-12/assets/index-ee840229.css">
+    <link rel="stylesheet" href="/goit-js-hw-12/assets/index-2804725a.css">
   </head>
   <body class="body-class">
-    <header class="header"></header>
-    <main>
-      <form class="search-form js-search-form" action="">
-        <label class="input-text"></label>
-        <input
-          class="input"
-          type="text"
-          name="searchword"
-          placeholder="Search images..."
-        />
-        <button class="search-form-btn" type="submit">Search</button>
-      </form>
-      <div class="loader is-hidden js-loader">
-        Loading image, please wait...
-      </div>
-      <section class="gallery">
-        <ul class="list js-gallery"></ul>
-      </section>
-    </main>
+    <form class="search-form">
+      <label class="input-text"></label>
+      <input
+        type="text"
+        class="search-input"
+        name="searchKeyword"
+        placeholder="Search images..."
+      />
+      <button type="submit" class="search-btn">Search</button>
+    </form>
+    <ul class="gallery"></ul>
+    <button type="button" class="photo-btn is-hidden-btn">Load more</button>
+    <span class="loader position is-hidden"></span>
     
   </body>
 </html>
