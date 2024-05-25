@@ -1,43 +1,37 @@
 export const createMarkup = images => {
   return images.reduce(
-    ( html, { tags, webformatURL, largeImageURL, likes, views, comments, downloads } ) => {
+    (
+      html,
+      { tags, webformatURL, largeImageURL, likes, views, comments, downloads }
+    ) => {
       return (
         html +
-        `
-			<li class="item-list">
-				<a class="item-list-link" href="${largeImageURL}">
-					<img class="item-list-img" src="${webformatURL}" alt="${tags}">
-				</a>
-				<ul class="markup-info">
-					<li class="item-list-info-text">
-						<h3 class="item-list-title">Likes</h3>
-						<p class="item-list-text">${likes}</p>
-					</li>
-					<li class="item-list-info-text">
-						<h3 class="item-list-title">Views</h3>
-						<p class="item-list-text">${views}</p>
-					</li>
-					<li class="item-list-info-text">
-						<h3 class="item-list-title">Comments</h3>
-						<p class="item-list-text">${comments}</p>
-					</li>
-					<li class="item-list-info-text">
-						<h3 class="item-list-title">Downloads</h3>
-						<p class="item-list-text">${downloads}</p>
-					</li>
-				</ul>
-			</li>
-		`
+        `<li class="photo-container">
+    <a href=${largeImageURL} class="card-link js-card-link">
+        <img class="photo" src="${webformatURL}" alt="${tags}" >
+    </a>
+    <div class="info">
+        <div class="info-item">
+            <span class="title">Likes</span>
+            <span class="info">${likes}</span>
+        </div>
+        <div class="info-item">
+            <span class="title">Views</span>
+            <span class="info">${views}</span>
+        </div>
+        <div class="info-item">
+            <span class="title">Comments</span>
+            <span class="info">${comments}</span>
+        </div>
+        <div class="info-item">
+            <span class="title">Downloads</span>
+            <span class="info">${downloads}</span>
+        </div>
+    </div>
+</li>
+    `
       );
     },
     ''
   );
 };
-
-
-
-
-
-
-
-
